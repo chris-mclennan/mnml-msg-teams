@@ -1,0 +1,39 @@
+[package]
+name = "mnml-msg-teams"
+version = "0.1.0"
+edition = "2024"
+license = "MIT"
+description = "Microsoft Teams browse + post for mnml — terminal TUI for teams, channels, chats, threads, search, and posting from the editor. Uses Microsoft Graph (no SDK dep) with the same OAuth device-code flow as Azure CLI."
+homepage = "https://mnml.sh"
+repository = "https://github.com/chris-mclennan/mnml-msg-teams"
+readme = "README.md"
+authors = ["Chris McLennan"]
+
+[[bin]]
+name = "mnml-msg-teams"
+path = "src/main.rs"
+
+[dependencies]
+ratatui = "0.29"
+crossterm = "0.28"
+reqwest = { version = "0.12", features = ["blocking", "json"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+toml = "0.8"
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+chrono = { version = "0.4", features = ["serde"] }
+dirs = "5"
+webbrowser = "1"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+
+[profile.dist]
+inherits = "release"
+lto = "thin"
