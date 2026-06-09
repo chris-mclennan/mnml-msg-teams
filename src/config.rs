@@ -97,15 +97,16 @@ pub fn config_path() -> PathBuf {
 
 pub fn load() -> Result<Config> {
     let path = config_path();
-    if !path.exists() {
+    let first_run = !path.exists();
+    if first_run {
         if let Some(parent) = path.parent() {
             std::fs::create_dir_all(parent)?;
         }
         std::fs::write(&path, Config::EXAMPLE)?;
-        return Err(anyhow!(
-            "wrote config template to {} — edit it then re-run",
+        eprintln!(
+            "first run: wrote config template to {} — edit it to customize",
             path.display()
-        ));
+        );
     }
     let text = std::fs::read_to_string(&path)?;
     let cfg: Config = toml::from_str(&text)?;
