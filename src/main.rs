@@ -139,6 +139,7 @@ fn cmd_logout() -> Result<()> {
 
 fn cmd_check() -> Result<()> {
     let cfg = config::load();
+    println!("{} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
     println!("config: {}", config::config_path().display());
     match &cfg {
         Ok(cfg) => {
